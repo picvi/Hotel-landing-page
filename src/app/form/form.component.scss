@@ -1,0 +1,45 @@
+form {
+  display: flex;
+  flex-flow: column wrap;
+  width: max-content;
+
+  margin: auto;
+  margin-top: 5rem;
+  padding: 3rem;
+
+  background-color: #bcbcbc49;
+  border-radius: 3rem;
+  border: dimgray;
+  div {
+    width: max-content;
+    flex-grow: 1;
+
+    label {
+      width: fit-content;
+      margin-right: .5rem;
+    }
+    input, select {
+      border: whitesmoke;
+      background-color: #fafafa91;
+      border-radius: 1em;
+      height: 2em;
+      width: 10rem;
+      margin: .5rem;
+    }
+  }
+}
+
+
+#deleteBtn {
+  width: 1rem;
+  margin: auto;
+}
+button {
+  background-color: bisque;
+  border: none;
+  border-radius: 1rem;
+  width: 8rem;
+  height: 2rem;
+  margin: auto;
+  margin-top: .5rem;
+}

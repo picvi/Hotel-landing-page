@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#header {
+  position: absolute;
+  top: .70rem;
+  width: 99%;
+  height: 3rem;
+  background-color: #ffffff49;
+  margin: auto;
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+
+    a {
+      text-decoration: none;
+      color: black;
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin: 0 3rem;
+    }
+  }
+}

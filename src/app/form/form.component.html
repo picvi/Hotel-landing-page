@@ -1,0 +1,84 @@
+<form
+  [formGroup]="reactiveForm"
+  novalidate
+  (ngSubmit)="onSubmit(reactiveForm)"
+  #form
+>
+  <div>
+    <label for="name"> Name </label>
+    <input id="name" type="text" formControlName="name" />
+  </div>
+  <div
+    *ngIf="
+      reactiveForm.controls.name.getError('occuipiedName') &&
+      reactiveForm.controls.name.touched &&
+      reactiveForm.controls.name.dirty
+    "
+  >
+    <p>Name is occuipied</p>
+  </div>
+  <div>
+    <label> Code </label>
+    <input type="password" formControlName="code" />
+  </div>
+  <div>
+    <label> Repeat Code </label>
+    <input type="password" formControlName="codeRepeat" />
+  </div>
+  <div *ngIf="reactiveForm.controls.tel">
+    <label> Phone Number</label>
+    <input
+      type="tel"
+      formControlName="tel"
+      appHint
+      [hintText]="'Please write down your phone code correctly'"
+    />
+  </div>
+  <div
+    *ngIf="
+      reactiveForm.get('tel') &&
+      reactiveForm.get('tel').getError('invalidPhoneSpelling') &&
+      reactiveForm.get('tel').touched &&
+      reactiveForm.get('tel').dirty
+    "
+  >
+    <p>Invalid phone spelling</p>
+  </div>
+  <div #containerForIns></div>
+  <div *ngIf="reactiveForm.controls.comment">
+    <label for="comment"> Short comment</label>
+    <input type="text" id="comment" formControlName="comment" />
+    <button id="deleteBtn" type="button" (click)="deleteControl('comment')">
+      x
+    </button>
+  </div>
+  <div
+    *ngIf="
+      reactiveForm.get('comment').value.length &&
+      reactiveForm.get('comment').getError('noDot') &&
+      reactiveForm.get('comment').touched &&
+      reactiveForm.get('comment').dirty
+    "
+  >
+    <p>Please insert a dot at the end of the sentence</p>
+  </div>
+  <div>
+    <label for="date">Date of arrival</label>
+    <input type="date" id="date" formControlName="dateArrival" />
+  </div>
+  <div
+    *ngIf="
+      reactiveForm.get('dateArrival').getError('notInAdvance') &&
+      reactiveForm.get('dateArrival').touched &&
+      reactiveForm.get('dateArrival').dirty
+    "
+  >
+    <p>Please, book at least 3 days in advance</p>
+  </div>
+  <div>
+    <button type="button" (click)="addControl('Phone Number 2', 'tel')">
+      Add phone number
+    </button>
+  </div>
+  <button type="submit">Get the list</button>
+</form>
