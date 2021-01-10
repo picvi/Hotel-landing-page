@@ -1,34 +1,58 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  AbstractControl,
+  RequiredValidator,
+  Validators,
+} from '@angular/forms';
+import { BookedRoomForm } from '../booked-room-form';
+import { BookingService } from '../booking.service';
 import { ValidatorsService } from '../validators.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
   @ViewChild('containerForIns') private form: ElementRef;
   list = [];
   current: string;
+  today = new Date(Date.now());
 
   constructor(
     private renderer: Renderer2,
-    private validators: ValidatorsService
+    private validators: ValidatorsService,
+    private book: BookingService
   ) {}
 
   reactiveForm = new FormGroup({
     name: new FormControl(''),
-    code: new FormControl(''),
-    codeRepeat: new FormControl(''),
-    tel: new FormControl('+375', [this.validators.checkPhoneSpelling()]),
-    codeOperator: new FormControl(),
+    typeOfRoom: new FormControl('', Validators.required),
+    tel: new FormControl('+375', [
+      this.validators.checkPhoneSpelling(),
+      Validators.required,
+    ]),
     comment: new FormControl('', this.validators.endsWithDot()),
-    dateArrival: new FormControl('', this.validators.dateInAdvanve()),
+    dateOfArrival: new FormControl('', [
+      this.validators.dateInAdvanve(),
+      Validators.required,
+    ]),
+    dateOfDepartment: new FormControl(''),
   });
 
   onSubmit(form: FormGroup) {
-    console.log(form);
+    const bookedRoomDTO = new BookedRoomForm(
+      this.reactiveForm.controls.name.value,
+      this.reactiveForm.controls.typeOfRoom.value,
+      this.reactiveForm.controls.tel.value,
+      this.reactiveForm.controls.comment.value,
+      this.reactiveForm.controls.dateOfArrival.value,
+      this.reactiveForm.controls.dateOfDepartment.value,
+      this?.reactiveForm?.controls?.PhoneNumber2?.value
+    );
+      this.book.book(bookedRoomDTO);
   }
 
   deleteControl(controlName: string): void {
@@ -50,15 +74,5 @@ export class FormComponent {
     this.renderer.appendChild(label, labelText);
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
-  }
-
-  checkCodeValidator(
-    control: AbstractControl
-  ): { [s: string]: boolean } | null {
-    if (control.value) {
-      return null;
-    } else {
-      return { userValidator: true };
-    }
   }
 }

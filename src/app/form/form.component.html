@@ -18,14 +18,14 @@
     <p>Name is occuipied</p>
   </div>
   <div>
-    <label> Code </label>
-    <input type="password" formControlName="code" />
+    <label for="typeOfRoom"> Type of room</label>
+    <select id="typeOfRoom" formControlName="typeOfRoom">
+      <option>Loft</option>
+      <option>Shelter</option>
+      <option>Cabana</option>
+    </select>
   </div>
   <div>
-    <label> Repeat Code </label>
-    <input type="password" formControlName="codeRepeat" />
-  </div>
-  <div *ngIf="reactiveForm.controls.tel">
     <label> Phone Number</label>
     <input
       type="tel"
@@ -63,22 +63,33 @@
     <p>Please insert a dot at the end of the sentence</p>
   </div>
   <div>
-    <label for="date">Date of arrival</label>
-    <input type="date" id="date" formControlName="dateArrival" />
+    <label for="dateArr">Date of arrival</label>
+    <input type="date" id="dateArr" formControlName="dateOfArrival" min="{{today.toDateString()}}"/>
   </div>
   <div
     *ngIf="
-      reactiveForm.get('dateArrival').getError('notInAdvance') &&
-      reactiveForm.get('dateArrival').touched &&
-      reactiveForm.get('dateArrival').dirty
+      reactiveForm.get('dateOfArrival').getError('notInAdvance') &&
+      reactiveForm.get('dateOfArrival').touched &&
+      reactiveForm.get('dateOfArrival').dirty
     "
   >
     <p>Please, book at least 3 days in advance</p>
   </div>
   <div>
-    <button type="button" (click)="addControl('Phone Number 2', 'tel')">
+    <label for="dateDep">Date of department</label>
+    <input type="date" id="dateDep" formControlName="dateOfDepartment"/>
+  </div>
+  <div>
+    <button
+      type="button"
+      (click)="addControl('PhoneNumber2', 'tel')"
+      appHint
+      [hintText]="
+        'If you have more than one phone number, click to create another field for phone number'
+      "
+    >
       Add phone number
     </button>
   </div>
-  <button type="submit">Get the list</button>
+  <button type="submit">Book a room</button>
 </form>

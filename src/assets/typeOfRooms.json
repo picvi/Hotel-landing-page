@@ -1,0 +1,44 @@
+{
+  "cabana": {
+    "briefInfo": "Lorem ipsum dolor",
+    "info": "The Cabana rooms are all beachfront rooms, and feature plush head boards, some of these rooms feature walk out from balcony to the beach.",
+    "facilities1": "a spacious bathroom featuring a Balinese-style outdoor bathtub",
+    "facilities2":" our cosy Cabana has its own garden",
+    "facilities3": "an intimate bedroom with a king-sized bed and a sofa bed",
+    "plan1":"Classic, Guest room, 2 Twin/Single Bed(s)",
+    "price1":"278$",
+    "plan2": "Deluxe, Guest room, 1 Queen",
+    "price2": "320$",
+    "plan3": "Suite, 1 King",
+    "price3": "650$",
+    "pics":"assets/pics/cabana.jpg"
+  },
+  "loft": {
+    "briefInfo": "Lorem ipsum dolor",
+    "info": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    "facilities1": "a spacious bathroom featuring a Balinese-style outdoor bathtub",
+    "facilities2":" our cosy Cabana has its own garden",
+    "facilities3": "an intimate bedroom with a king-sized bed and a sofa bed",
+    "plan1":"Classic, Guest room, 2 Twin/Single Bed(s)",
+    "price1":"278$",
+    "plan2": "Deluxe, Guest room, 1 Queen",
+    "price2": "320$",
+    "plan3": "Suite, 1 King",
+    "price3": "650$",
+    "pics": "assets/pics/loft.jpg"
+  },
+  "shelter": {
+    "briefInfo": "Lorem ipsum dolor",
+    "info": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    "facilities1": "a spacious bathroom featuring a Balinese-style outdoor bathtub",
+    "facilities2":" our cosy Cabana has its own garden",
+    "facilities3": "an intimate bedroom with a king-sized bed and a sofa bed",
+    "plan1":"Classic, Guest room, 2 Twin/Single Bed(s)",
+    "price1":"278$",
+    "plan2": "Deluxe, Guest room, 1 Queen",
+    "price2": "320$",
+    "plan3": "Suite, 1 King",
+    "price3": "650$",
+    "pics": "assets/pics/shelter.jpg"
+  }
+}
