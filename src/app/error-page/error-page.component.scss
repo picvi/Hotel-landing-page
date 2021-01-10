@@ -1,0 +1,12 @@
+div {
+  margin-top: 5rem;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 50vw;
+    height: auto;
+  }
+}

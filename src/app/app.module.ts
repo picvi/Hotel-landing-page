@@ -7,19 +7,25 @@ import { FormComponent } from './form/form.component';
 import { HintDirective } from './hint.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainPageComponent } from './main-page/main-page.component';
+import { TypesOfRoomsComponent } from './types-of-rooms/types-of-rooms.component';
+import { HttpClientModule }   from '@angular/common/http';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FormComponent,
     HintDirective,
-    MainPageComponent
+    MainPageComponent,
+    TypesOfRoomsComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
