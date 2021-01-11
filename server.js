@@ -23,7 +23,7 @@ app.post("/book", jsonParser, (request, response) => {
   } else {
     fs.readFile("./server/db.json", "utf8", (err, data) => {
       if (err) {
-        console.log(err.message);
+        console.log(err);
         return response.status(500).send(err);
       } else {
         try {

@@ -1,16 +1,20 @@
-<form
-  [formGroup]="reactiveForm"
-  novalidate
-  (ngSubmit)="onSubmit(reactiveForm)"
-  #form
->
+<form [formGroup]="reactiveForm" novalidate (ngSubmit)="bookRoom()" #form>
   <div>
     <label for="name"> Name </label>
-    <input id="name" type="text" formControlName="name" />
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      [class.invalid]="
+        reactiveForm.controls.name.invalid &&
+        reactiveForm.controls.name.touched &&
+        reactiveForm.controls.name.dirty
+      "
+    />
   </div>
   <div
     *ngIf="
-      reactiveForm.controls.name.getError('occuipiedName') &&
+      reactiveForm.controls.name.getError('tooShort') &&
       reactiveForm.controls.name.touched &&
       reactiveForm.controls.name.dirty
     "
@@ -18,11 +22,25 @@
     <p>Name is occuipied</p>
   </div>
   <div>
+    <label for="typeOfHouse"> Type of house</label>
+    <select id="typeOfHouse" formControlName="typeOfHouse">
+      <option
+        *ngFor="let type of typesOfHouses"
+        [selected]="type.toLowerCase() == typeOfHouse.toLowerCase()"
+      >
+        {{ type }}
+      </option>
+    </select>
+  </div>
+  <div>
     <label for="typeOfRoom"> Type of room</label>
     <select id="typeOfRoom" formControlName="typeOfRoom">
-      <option>Loft</option>
-      <option>Shelter</option>
-      <option>Cabana</option>
+      <option
+        *ngFor="let type of typesOfRooms"
+        [selected]="type.toLowerCase() == typeOfRoom.toLowerCase()"
+      >
+        {{ type }}
+      </option>
     </select>
   </div>
   <div>
@@ -64,7 +82,7 @@
   </div>
   <div>
     <label for="dateArr">Date of arrival</label>
-    <input type="date" id="dateArr" formControlName="dateOfArrival" min="{{today.toDateString()}}"/>
+    <input type="date" id="dateArr" formControlName="dateOfArrival" />
   </div>
   <div
     *ngIf="
@@ -77,7 +95,7 @@
   </div>
   <div>
     <label for="dateDep">Date of department</label>
-    <input type="date" id="dateDep" formControlName="dateOfDepartment"/>
+    <input type="date" id="dateDep" formControlName="dateOfDepartment" />
   </div>
   <div>
     <button

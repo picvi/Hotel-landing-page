@@ -1,7 +1,7 @@
 <div class="wrap">
   <div id="first-block">
     <div class="cover">
-      <h2>{{type?.briefInfo}}</h2>
+      <h2>{{typeOfHouse | italic }}</h2>
     </div>
     <img src="{{type?.pics}}">
   </div>
@@ -20,17 +20,17 @@
     </div>
   </div>
   <div id="forth-block">
-    <div class="left">
+    <div class="left" routerLink="form" (click)="book(type?.plan1)">
       <h2>{{type?.plan1}}</h2>
-      <h4>{{type?.price1}} per night</h4>
+      <h4>{{type?.price1 | currency: 'USD': 'symbol'}} per night</h4>
     </div>
-    <div class="right">
+    <div class="right" (click)="book(type?.plan2)">
       <h2>{{type?.plan2}}</h2>
-      <h4>{{type?.price2}} per night</h4>
+      <h4>{{type?.price2 | currency: 'USD': 'symbol'}} per night</h4>
     </div>
-    <div class="middle">
-      <h2>{{type?.plan2}}</h2>
-      <h4>{{type?.price2}} per night</h4>
+    <div class="middle" (click)="book(type?.plan3)">
+      <h2>{{type?.plan3}}</h2>
+      <h4>{{type?.price3 | currency: 'USD': 'symbol'}} per night</h4>
     </div>
   </div>
 </div>

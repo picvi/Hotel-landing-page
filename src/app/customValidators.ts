@@ -1,11 +1,7 @@
-import { Injectable } from '@angular/core';
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { ValidatorFn, FormControl } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ValidatorsService {
-  checkPhoneSpelling(): ValidatorFn {
+export class CustomValidators {
+  static checkPhoneSpelling(): ValidatorFn {
     return (control: FormControl): { [s: string]: boolean } | null => {
       const regExWithPlus = /[+]{1}375(29|33|25)[0-9]*/.test(control.value);
       if (regExWithPlus && control.value.length === 13) {
@@ -16,7 +12,7 @@ export class ValidatorsService {
     };
   }
 
-  endsWithDot(): ValidatorFn {
+  static endsWithDot(): ValidatorFn {
     return (control: FormControl): { [s: string]: boolean } | null => {
       if (control.value.endsWith('.')) {
         return null;
@@ -26,7 +22,7 @@ export class ValidatorsService {
     };
   }
 
-  dateInAdvanve(): ValidatorFn {
+  static dateInAdvanve(): ValidatorFn {
     return (control: FormControl): { [s: string]: boolean } | null => {
       const difference = Date.parse(control.value) - Date.now();
       const date = new Date(difference);
@@ -35,6 +31,24 @@ export class ValidatorsService {
       } else {
         return { notInAdvance: true };
       }
+    };
+  }
+
+  static checkLength(param: number): ValidatorFn {
+    return (control: FormControl): { [s: string]: boolean } | null => {
+      if (control.value?.length < param) {
+        return { tooShort: true };
+      } else {
+        return null;
+      }
+    };
+  }
+
+  static checkIfIdentical(control2: FormControl): ValidatorFn {
+    return (control: FormControl): { [s: string]: boolean } | null => {
+      return control2.value === control.value
+        ? null
+        : { notIdenticalValues: true };
     };
   }
 }

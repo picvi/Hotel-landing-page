@@ -8,23 +8,40 @@ import { throwError } from 'rxjs';
 @Component({
   selector: 'app-types-of-rooms',
   templateUrl: './types-of-rooms.component.html',
-  styleUrls: ['./types-of-rooms.component.scss']
+  styleUrls: ['./types-of-rooms.component.scss'],
 })
 export class TypesOfRoomsComponent implements OnInit {
   type: Room;
-  constructor(private getRoom: GetRequestsRoomsService, private route: ActivatedRoute, private router: Router) { }
+  typeOfHouse: string;
+
+  constructor(
+    private getRoom: GetRequestsRoomsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(switchMap(params => params.getAll('type'))).subscribe(roomType => {
-      this.getRoom.getRoomTypeInfo().subscribe((roomTypes) => {
-        // non-existing type
-        this.type = roomTypes[roomType];
-      }, error => {
-        console.log(error);
-        this.router.navigate(['error', `${error.message}`])
-        return throwError(error);
-      })
-    })
+    this.route.paramMap
+      .pipe(switchMap((params) => params.getAll('type')))
+      .subscribe((roomType) => {
+        this.getRoom.getRoomTypeInfo().subscribe(
+          (roomTypes) => {
+            this.type = roomTypes[roomType];
+            this.typeOfHouse = roomType;
+          },
+          (error) => {
+            console.log(error);
+            this.router.navigate(['error', `${error.message}`]);
+          }
+        );
+      });
   }
-
+  book(typeR: string) {
+    this.router.navigate(['form'], {
+      queryParams: {
+        typeOfHouse: this.typeOfHouse,
+        typeOfRoom: typeR,
+      },
+    });
+  }
 }

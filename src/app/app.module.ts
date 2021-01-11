@@ -10,6 +10,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { TypesOfRoomsComponent } from './types-of-rooms/types-of-rooms.component';
 import { HttpClientModule }   from '@angular/common/http';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ItalicPipe } from './italic.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     HintDirective,
     MainPageComponent,
     TypesOfRoomsComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    ItalicPipe,
   ],
   imports: [
     BrowserModule,

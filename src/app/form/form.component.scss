@@ -19,7 +19,6 @@ form {
       margin-right: .5rem;
     }
     input, select {
-      border: whitesmoke;
       background-color: #fafafa91;
       border-radius: 1em;
       height: 2em;
@@ -42,4 +41,8 @@ button {
   height: 2rem;
   margin: auto;
   margin-top: .5rem;
+}
+
+.invalid {
+  border: 1px solid rgb(177, 7, 7);
 }

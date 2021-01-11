@@ -1,5 +1,6 @@
 export class BookedRoomForm {
   name: string;
+  typeOfHouse: string;
   typeOfRoom: string;
   tel: string;
   comment: string;
@@ -7,9 +8,19 @@ export class BookedRoomForm {
   dateOfDepartment: string;
   PhoneNumber2?: string;
 
-  constructor(name: string, typeOfRoom: string, tel: string, comment: string, dateOfArrival: string, dateOfDepartment: string, PhoneNumber2?: string) {
+  constructor(
+    name: string,
+    typeOfHouse: string,
+    typeOfRoom: string,
+    tel: string,
+    comment: string,
+    dateOfArrival: string,
+    dateOfDepartment: string,
+    PhoneNumber2?: string
+  ) {
     this.name = name;
-    this.typeOfRoom= typeOfRoom;
+    this.typeOfHouse = typeOfHouse;
+    this.typeOfRoom = typeOfRoom;
     this.tel = tel;
     this.comment = comment;
     this.dateOfArrival = dateOfArrival;
