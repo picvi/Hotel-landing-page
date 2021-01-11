@@ -31,8 +31,9 @@ export class FormComponent {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.typeOfHouse = params.typeOfHouse;
-      this.typeOfRoom = params.typeOfRoom;
+      
+      this.typeOfHouse = params.TypeOfHouse ?? '';
+      this.typeOfRoom = params.typeOfRoom ?? '' ;
     });
   }
 
