@@ -12,7 +12,7 @@ export class BookingService {
 
   book(typeOfRoomDTO: BookedRoomForm): void {
     this.http.post('http://localhost:3000/book', typeOfRoomDTO).subscribe((_: any) => {
-      console.log(_, 'booked')
+      console.log(_)
     },
     (err) => {
       this.router.navigate(['error', `${err.message}`])

@@ -2,49 +2,68 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import {
   FormGroup,
   FormControl,
-  AbstractControl,
-  RequiredValidator,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { BookedRoomForm } from '../booked-room-form';
 import { BookingService } from '../booking.service';
-import { ValidatorsService } from '../validators.service';
+import { CustomValidators } from '../customValidators'
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],
+  styleUrls: ['./form.component.scss']
 })
 export class FormComponent {
   @ViewChild('containerForIns') private form: ElementRef;
-  list = [];
-  current: string;
-  today = new Date(Date.now());
+  typeOfRoom: string;
+  typeOfHouse: string;
+  typesOfHouses = ['Loft', 'Shelter', 'Cabana'];
+  typesOfRooms = ['Classic', 'Deluxe', 'Suite' ];
+  saved = false;
 
   constructor(
     private renderer: Renderer2,
-    private validators: ValidatorsService,
-    private book: BookingService
+    private book: BookingService,
+    private route: ActivatedRoute
   ) {}
 
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.typeOfHouse = params.typeOfHouse;
+      this.typeOfRoom = params.typeOfRoom;
+    });
+  }
+
+  canDeactivate(): boolean | Observable<boolean>{
+    if (!this.saved) {
+      return confirm('Data will not be saved, are you sure you want to leave this page?')
+    } else {
+      return true;
+    }
+  }
+
   reactiveForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', CustomValidators.checkLength(4)),
+    typeOfHouse: new FormControl('', Validators.required),
     typeOfRoom: new FormControl('', Validators.required),
     tel: new FormControl('+375', [
-      this.validators.checkPhoneSpelling(),
+      CustomValidators.checkPhoneSpelling(),
       Validators.required,
     ]),
-    comment: new FormControl('', this.validators.endsWithDot()),
+    comment: new FormControl('', CustomValidators.endsWithDot()),
     dateOfArrival: new FormControl('', [
-      this.validators.dateInAdvanve(),
+      CustomValidators.dateInAdvanve(),
       Validators.required,
     ]),
     dateOfDepartment: new FormControl(''),
   });
 
-  onSubmit(form: FormGroup) {
+  bookRoom() {
     const bookedRoomDTO = new BookedRoomForm(
       this.reactiveForm.controls.name.value,
+      this.reactiveForm.controls.typeOfHouse.value,
       this.reactiveForm.controls.typeOfRoom.value,
       this.reactiveForm.controls.tel.value,
       this.reactiveForm.controls.comment.value,
@@ -52,7 +71,8 @@ export class FormComponent {
       this.reactiveForm.controls.dateOfDepartment.value,
       this?.reactiveForm?.controls?.PhoneNumber2?.value
     );
-      this.book.book(bookedRoomDTO);
+    this.book.book(bookedRoomDTO);
+    this.saved = true;
   }
 
   deleteControl(controlName: string): void {

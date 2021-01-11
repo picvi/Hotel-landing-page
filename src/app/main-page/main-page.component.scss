@@ -10,9 +10,6 @@
   display: grid;
   grid-template-rows: repeat(4, 0.5fr);
   grid-template-columns: 1fr;
-  scrollbar-width: none;
-
-  
 
   #first-block {
     grid-row: 1/2;
