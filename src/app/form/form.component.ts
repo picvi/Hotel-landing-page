@@ -3,25 +3,29 @@ import {
   FormGroup,
   FormControl,
   Validators,
+  Form,
+  FormBuilder,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { BookedRoomForm } from '../booked-room-form';
 import { BookingService } from '../booking.service';
-import { CustomValidators } from '../customValidators'
+import { CustomValidators } from '../customValidators';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
 export class FormComponent {
   @ViewChild('containerForIns') private form: ElementRef;
   typeOfRoom: string;
   typeOfHouse: string;
   typesOfHouses = ['Loft', 'Shelter', 'Cabana'];
-  typesOfRooms = ['Classic', 'Deluxe', 'Suite' ];
+  typesOfRooms = ['Classic', 'Deluxe', 'Suite'];
   saved = false;
+  subscription: Subscription;
+  reactiveForm: FormGroup;
 
   constructor(
     private renderer: Renderer2,
@@ -30,36 +34,42 @@ export class FormComponent {
   ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      
-      this.typeOfHouse = params.TypeOfHouse ?? '';
-      this.typeOfRoom = params.typeOfRoom ?? '' ;
+    this.subscription = this.route.queryParams.subscribe((params) => {
+      this.typeOfHouse = params.typeOfHouse ? params.typeOfHouse : '';
+      this.typeOfRoom = params.typeOfRoom ? params.typeOfRoom : '';
     });
+
+    this.reactiveForm = new FormGroup({
+      name: new FormControl(''),
+      typeOfHouse: new FormControl('', Validators.required),
+      typeOfRoom: new FormControl('', Validators.required),
+      tel: new FormControl('+375', [
+        CustomValidators.checkPhoneSpelling(),
+        Validators.required,
+      ]),
+      comment: new FormControl('', CustomValidators.endsWithDot()),
+      dateOfArrival: new FormControl('', [
+        CustomValidators.dateInAdvanve(),
+        Validators.required,
+      ]),
+      dateOfDepartment: new FormControl(''),
+    });
+
+    if (this.typeOfHouse !== '') {
+      this.reactiveForm.controls.typeOfHouse.setValue(this.typeOfHouse);
+    }
+    this.reactiveForm.controls.typeOfRoom.setValue(this.typeOfRoom);
   }
 
-  canDeactivate(): boolean | Observable<boolean>{
+  canDeactivate(): boolean | Observable<boolean> {
     if (!this.saved) {
-      return confirm('Data will not be saved, are you sure you want to leave this page?')
+      return confirm(
+        'Data will not be saved, are you sure you want to leave this page?'
+      );
     } else {
       return true;
     }
   }
-
-  reactiveForm = new FormGroup({
-    name: new FormControl('', CustomValidators.checkLength(4)),
-    typeOfHouse: new FormControl('', Validators.required),
-    typeOfRoom: new FormControl('', Validators.required),
-    tel: new FormControl('+375', [
-      CustomValidators.checkPhoneSpelling(),
-      Validators.required,
-    ]),
-    comment: new FormControl('', CustomValidators.endsWithDot()),
-    dateOfArrival: new FormControl('', [
-      CustomValidators.dateInAdvanve(),
-      Validators.required,
-    ]),
-    dateOfDepartment: new FormControl(''),
-  });
 
   bookRoom() {
     const bookedRoomDTO = new BookedRoomForm(
@@ -95,5 +105,9 @@ export class FormComponent {
     this.renderer.appendChild(label, labelText);
     this.renderer.appendChild(div, label);
     this.renderer.appendChild(div, input);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

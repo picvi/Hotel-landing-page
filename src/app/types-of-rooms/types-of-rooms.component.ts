@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetRequestsRoomsService } from '../get-requests-rooms.service';
 import { Room } from '../room';
 import { catchError, switchMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-types-of-rooms',
@@ -13,6 +13,7 @@ import { throwError } from 'rxjs';
 export class TypesOfRoomsComponent implements OnInit {
   type: Room;
   typeOfHouse: string;
+  subscription: Subscription;
 
   constructor(
     private getRoom: GetRequestsRoomsService,
@@ -21,7 +22,7 @@ export class TypesOfRoomsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap
+    this.subscription = this.route.paramMap
       .pipe(switchMap((params) => params.getAll('type')))
       .subscribe((roomType) => {
         this.getRoom.getRoomTypeInfo().subscribe(
@@ -30,12 +31,12 @@ export class TypesOfRoomsComponent implements OnInit {
             this.typeOfHouse = roomType;
           },
           (error) => {
-            console.log(error);
             this.router.navigate(['error', `${error.message}`]);
           }
         );
       });
   }
+
   book(typeR: string) {
     this.router.navigate(['form'], {
       queryParams: {
@@ -43,5 +44,9 @@ export class TypesOfRoomsComponent implements OnInit {
         typeOfRoom: typeR,
       },
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
