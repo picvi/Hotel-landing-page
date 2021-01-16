@@ -1,4 +1,4 @@
-<form [formGroup]="reactiveForm" novalidate (ngSubmit)="bookRoom()" #form>
+<form [formGroup]="reactiveForm" novalidate (ngSubmit)="bookRoom()">
   <div>
     <label for="name"> Name </label>
     <input
@@ -12,18 +12,10 @@
       "
     />
   </div>
-  <div
-    *ngIf="
-      reactiveForm.controls.name.getError('tooShort') &&
-      reactiveForm.controls.name.touched &&
-      reactiveForm.controls.name.dirty
-    "
-  >
-    <p>Name is occuipied</p>
-  </div>
   <div>
     <label for="typeOfHouse"> Type of house</label>
     <select id="typeOfHouse" formControlName="typeOfHouse">
+      <option selected="{{!typeOfHouse}}" disabled>Choose type of house</option>
       <option
         *ngFor="let type of typesOfHouses"
         [selected]="type.toLowerCase() == typeOfHouse.toLowerCase()"
@@ -35,6 +27,7 @@
   <div>
     <label for="typeOfRoom"> Type of room</label>
     <select id="typeOfRoom" formControlName="typeOfRoom">
+      <option selected="{{!typeOfRoom}}" disabled>Choose type of room</option>
       <option
         *ngFor="let type of typesOfRooms"
         [selected]="type.toLowerCase() == typeOfRoom.toLowerCase()"

@@ -17,26 +17,21 @@ app.listen(port, (err) => {
 
 app.post("/book", jsonParser, (request, response) => {
   const bookedItem = request.body;
-  console.log(bookedItem);
   if (!bookedItem) {
     response.status(400).send("No Data");
   } else {
     fs.readFile("./db.json", "utf8", (err, data) => {
-      console.log('test');
       if (err) {
-        console.log(err, 'sdfs');
+        console.log(err);
         return response.status(500).send(err);
       } else {
         try {
-          console.log(data, 'gh');
           const db = JSON.parse(data);
           const bookedRooms = db.bookedRooms;
-          console.log(bookedRooms);
-          const isRoomOccupied = bookedRooms.some((room) => {
-            room.typeOfRoom === bookedItem.typeOfRoom &&
+          const isRoomOccupied = bookedRooms.find((room) => {
+            return room.typeOfRoom === bookedItem.typeOfRoom &&
               room.dateOfDepartment === bookedItem.dateOfDepartment;
           });
-          console.log(isRoomOccupied)
           if (isRoomOccupied) {
             console.log("Sorry, room is occupied");
             return response.status(400).send("Sorry, room is occupied");

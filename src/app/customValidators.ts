@@ -44,11 +44,13 @@ export class CustomValidators {
     };
   }
 
-  static checkIfIdentical(control2: FormControl): ValidatorFn {
+  static checkIfIdentical(control2: any): ValidatorFn {
     return (control: FormControl): { [s: string]: boolean } | null => {
-      return control2.value === control.value
-        ? null
-        : { notIdenticalValues: true };
+      if (control && control2) {
+        return control2.value === control.value
+          ? null
+          : { notIdenticalValues: true };
+      }
     };
   }
 }

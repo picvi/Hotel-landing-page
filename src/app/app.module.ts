@@ -10,7 +10,9 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { TypesOfRoomsComponent } from './types-of-rooms/types-of-rooms.component';
 import { HttpClientModule }   from '@angular/common/http';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { ItalicPipe } from './italic.pipe';
+import { FixedPointNotationPipe } from './fixed-point-notation.pipe';
+import { HintProDirective } from './hint-pro.directive';
+import { TimeOutDirectiveDirective } from './time-out-directive.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ItalicPipe } from './italic.pipe';
     MainPageComponent,
     TypesOfRoomsComponent,
     ErrorPageComponent,
-    ItalicPipe,
+    FixedPointNotationPipe,
+    HintProDirective,
+    TimeOutDirectiveDirective,
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,7 @@ export class BookingService {
       console.log(_)
     },
     (err) => {
-      this.router.navigate(['error', `${err.message}`])
+      this.router.navigate(['error', `${err.error}`])
       console.log(err);
     })
   }
